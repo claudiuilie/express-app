@@ -1,0 +1,28 @@
+
+{{#if message.info}}
+    <div class="text-center alert alert-info alert-dismissible fade show" role="alert">
+        <i class="fas fa-info-circle fa-lg"></i>  {{message.info}}
+        <button type="button" class="btn btn-sm btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{{/if}}
+
+{{#if message.success}}
+    <div class="text-center alert alert-success alert-dismissible fade show" role="alert">
+        <i class="fas fa-check-circle fa-lg"></i>  {{message.success}}
+        <button type="button" class="btn btn-sm btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{{/if}}
+
+{{#if message.warn}}
+    <div class="text-center alert alert-warning alert-dismissible fade show" role="alert">
+        <i class="fas fa-exclamation-triangle fa-lg"></i>  {{message.warn}}
+        <button type="button" class="btn btn-sm btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{{/if}}
+
+{{#if message.error}}
+    <div class="text-center alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="fas fa-times-circle fa-lg"></i>  {{message.error}}
+        <button type="button" class="btn btn-sm btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{{/if}}
