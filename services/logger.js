@@ -1,5 +1,5 @@
 const {createLogger, format, transports} = require('winston');
-const { combine, timestamp, label, printf } = format;
+const {printf} = format;
 const dateUtils = require('../utils/dateUtils');
 
 const logger = createLogger({
@@ -24,7 +24,7 @@ const logger = createLogger({
                 }),
                 format.errors({stack: true}),
                 format.json(),
-                format.colorize({level:true}),
+                format.colorize({level: true}),
                 printf((info) => {
                     return `[${info.timestamp}] ${info.level}: ${info.message}`;
                 })
