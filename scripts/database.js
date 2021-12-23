@@ -5,20 +5,20 @@ const shell = require('shelljs')
 // const code = shell.exec('mysql -u root -e "create database testdb";').code;
 // console.log(code);
 
-
-
-async function e(){
-
-    shell.exec('mysql -u root -e "create database testdb";', function(code, stdout, stderr) {
-        console.log('Exit code:', code);
-        console.log('Program output:', stdout);
-        console.log('Program stderr:', stderr);
-    });
-
-    console.log(1);
+function exec(command) {
+    return new Promise((resolve, reject) => shelljs.exec(command, {}, (code, value, error) => {
+        if (error) {
+            return reject(error)
+        }
+        resolve(value)
+    }))
 }
 
-e()
+(async function execute(){
+    await shell.exec('mysql -u root -e "create database testdb";');
+    console.log(1);
+})();
+
 // shell.exec('exit');
 // console.log(process.env.DB_APP_USER);
 //
