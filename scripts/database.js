@@ -1,9 +1,7 @@
 const shell = require('shelljs');
 const params = getDbName({
     DB_NAME: process.env.DB_NAME,
-    DB_APP_USER: process.env.DB_APP_USER,
     DB_APP_USER_PW: process.env.DB_APP_USER_PW,
-    DB_ADMIN: process.env.DB_ADMIN,
     DB_ADMIN_PW: process.env.DB_ADMIN_PW,
 });
 
