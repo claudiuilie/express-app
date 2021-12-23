@@ -75,13 +75,7 @@ function updateEnvConfig(content) {
     await exec(`mysql -u root -e "CREATE USER '${params.DB_ADMIN}'@'%' IDENTIFIED BY '${params.DB_ADMIN_PW}';
             GRANT ALL PRIVILEGES ON ${params.DB_NAME}.* TO '${params.DB_ADMIN}'@'%';
             FLUSH PRIVILEGES;"`);
-    await exec(`mysql -u root -e " use  ${params.DB_NAME};` +
-        'CREATE TABLE `users` (\n' +
-        '  `id` int(11) NOT NULL AUTO_INCREMENT,\n' +
-        '  `username` varchar(100) NOT NULL,\n' +
-        '  `password` varchar(100) NOT NULL,\n' +
-        '  PRIMARY KEY (`id`)\n' +
-        ') ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4;"');
+    await exec(`mysql -u root -e "CREATE TABLE ${params.DB_NAME}.users (id int(11) NOT NULL AUTO_INCREMENT,username varchar(100) NOT NULL,password varchar(100) NOT NULL,PRIMARY KEY (id)) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4;"`);
     await exec(`mysql -u root -e "INSERT INTO ${params.DB_NAME}.users (id, username, password) VALUES(null, '${uiParams.testUser}', '${await encryptionUtils.encrypt(uiParams.password)}');"`);
 
     shell.echo(`Ui test user created, password:${uiParams.testUser}@${uiParams.password}`);
