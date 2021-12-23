@@ -68,20 +68,21 @@ function updateEnvConfig(content) {
     shell.echo('Start database script...');
     shell.echo(`Parameters: ${JSON.stringify(params)}`);
 
-    await exec(`mysql -u root -e "create database ${params.DB_NAME}";`);
+    await exec(`mysql -u root -e "CREATE DATABASE ${params.DB_NAME}";`);
     await exec(`mysql -u root -e "CREATE USER '${params.DB_APP_USER}'@'localhost' IDENTIFIED BY '${params.DB_APP_USER_PW}';
             GRANT ALL PRIVILEGES ON ${params.DB_NAME}.* TO '${params.DB_APP_USER}'@'localhost';
             FLUSH PRIVILEGES;"`);
     await exec(`mysql -u root -e "CREATE USER '${params.DB_ADMIN}'@'%' IDENTIFIED BY '${params.DB_ADMIN_PW}';
             GRANT ALL PRIVILEGES ON ${params.DB_NAME}.* TO '${params.DB_ADMIN}'@'%';
             FLUSH PRIVILEGES;"`);
-    await exec('mysql -u root -e "CREATE TABLE `users` (\n' +
+    await exec(`mysql -u root -e " use  ${params.DB_NAME};` +
+        'CREATE TABLE `users` (\n' +
         '  `id` int(11) NOT NULL AUTO_INCREMENT,\n' +
         '  `username` varchar(100) NOT NULL,\n' +
         '  `password` varchar(100) NOT NULL,\n' +
         '  PRIMARY KEY (`id`)\n' +
         ') ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4;"');
-    await exec(`mysql -u root -e "INSERT INTO bsc_platform.users (id, username, password) VALUES(null, '${uiParams.testUser}', '${await encryptionUtils.encrypt(uiParams.password)}');"`);
+    await exec(`mysql -u root -e "INSERT INTO ${params.DB_NAME}.users (id, username, password) VALUES(null, '${uiParams.testUser}', '${await encryptionUtils.encrypt(uiParams.password)}');"`);
 
     shell.echo(`Ui test user created, password:${uiParams.testUser}@${uiParams.password}`);
     shell.echo('\nDatabase script ended successfully.');
