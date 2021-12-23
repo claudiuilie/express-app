@@ -1,20 +1,20 @@
 const shell = require('shelljs');
 const params = getDbName({
     dbName: process.env.DB_NAME,
-    dbAppUser: process.env.DB_APP_USER
+    dbAppUser: process.env.DB_APP_USER,
+    dbAppUserPw: process.env.DB_APP_USER_PW,
+    dbAdmin: process.env.DB_ADMIN,
+    dbAdminPw: process.env.DB_ADMIN_PW,
 });
 
-console.log(params)
-
 function getDbName(param) {
-    if (param.dbName === undefined || param.dbName === '') {
-        throw new Error(`DB_NAME is undefined!`);
+    const keys = Object.keys(param);
+    for (let key in keys) {
+        const value = param[`${keys[key]}`];
+        if (value === undefined || value === '') {
+            throw new Error(`${keys[key]} is undefined!`)
+        }
     }
-
-    if (param.dbAppUser === undefined || param.dbAppUser === '') {
-        throw new Error(`DB_APP_USER is undefined!`);
-    }
-
     return param;
 }
 
@@ -41,6 +41,7 @@ async function runScript(script) {
 
 async function check() {
     shell.echo('Start database script...');
+    shell.echo(`Parameters; ${JSON.stringify(params)}`);
     await runScript(`mysql -u root -e "create database ${process.dbName}";`);
     await runScript();
     shell.echo('Database script ended successfully.');
