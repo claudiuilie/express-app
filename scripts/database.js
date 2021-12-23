@@ -2,7 +2,7 @@ const pool = require("../config/mySql");
 const helper = require("../helpers/dbHelper");
 const shell = require('shelljs')
 
-const code = shell.exec('').code;
+const code = shell.exec('python3 read_fan_speed.py').code;
 shell.echo(code);
 // shell.exec('exit');
 // console.log(process.env.DB_APP_USER);
