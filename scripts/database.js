@@ -1,7 +1,11 @@
 const shell = require('shelljs');
+const crypto = require('../utils/encryptionUtils');
+
 const params = getDbName({
     DB_NAME: process.env.DB_NAME,
+    DB_USER: 'app_user',
     DB_APP_USER_PW: process.env.DB_APP_USER_PW,
+    DB_ADMIN: 'app_admin',
     DB_ADMIN_PW: process.env.DB_ADMIN_PW,
 });
 
@@ -39,10 +43,20 @@ async function runScript(script) {
 
 async function check() {
     shell.echo('Start database script...');
-    shell.echo(`Parameters; ${JSON.stringify(params)}`);
+    shell.echo(`Parameters: ${JSON.stringify(params)}`);
     await runScript(`mysql -u root -e "create database ${params.DB_NAME}";`);
     await runScript();
     shell.echo('Database script ended successfully.');
+    shell.echo(`.env properties:
+    APP_PORT=90
+    DB_HOST=localhost
+    DB_USER=${params.DB_USER}
+    DB_PASSWORD=${await crypto.encrypt(params.DB_APP_USER_PW)}
+    DB_DATABASE=${params.DB_NAME}
+    DB_LIMIT_CONNECTIONS=10
+    DB_LIMIT_QUEUE=0
+    DB_LIMIT_LIST_PER_PAGE=10
+    DB_WAIT_FOR_CONNECTIONS=true`);
 }
 
 check();
