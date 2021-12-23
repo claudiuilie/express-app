@@ -45,7 +45,6 @@ async function check() {
     shell.echo('Start database script...');
     shell.echo(`Parameters: ${JSON.stringify(params)}`);
     await runScript(`mysql -u root -e "create database ${params.DB_NAME}";`);
-    await runScript();
     shell.echo('Database script ended successfully.');
     shell.echo(`.env properties:
     APP_PORT=90
