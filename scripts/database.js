@@ -74,6 +74,6 @@ function updateEnvConfig(content) {
 
     shell.echo(`Ui test user created :test@test`);
     shell.echo('\nDatabase script ended successfully.');
-    shell.echo('Database connection settings:'+JSON.stringify(params))
+    shell.echo('Database connection settings:'+JSON.stringify(params));
     updateEnvConfig(envContent);
 })();
