@@ -7,11 +7,11 @@ const params = getDbName({
 console.log(params)
 
 function getDbName(param) {
-    if (param.dbName === undefined) {
+    if (param.dbName === undefined || param.dbName === '') {
         throw new Error(`DB_NAME is undefined!`);
     }
 
-    if (param.dbAppUser === undefined) {
+    if (param.dbAppUser === undefined || param.dbAppUser === '') {
         throw new Error(`DB__APP_USER is undefined!`);
     }
 
