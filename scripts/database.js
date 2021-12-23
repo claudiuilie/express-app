@@ -46,12 +46,6 @@ async function exec(script) {
     shell.echo(`message: ${process.stdout === '' ? 'Success' : process.stdout}`);
 }
 
-function createDbUser(username, database) {
-    return `CREATE USER 'app_admin'@'%' IDENTIFIED BY 'BscPlatformAdmin2021';
-            GRANT ALL PRIVILEGES ON bsc_platform.* TO 'app_admin'@'%';
-            FLUSH PRIVILEGES;`;
-}
-
 function updateEnvConfig(content) {
     shell.echo(`\nUpdating .env:\n${content}`);
     try {
@@ -66,14 +60,14 @@ function updateEnvConfig(content) {
     shell.echo('Start database script...');
     shell.echo(`Parameters: ${JSON.stringify(params)}`);
 
-    // await exec(`mysql -u root -e "CREATE DATABASE ${params.DB_NAME}";`);
-    // await exec(`mysql -u root -e "CREATE USER '${params.DB_APP_USER}'@'localhost' IDENTIFIED BY '${params.DB_APP_USER_PW}';
-    //         GRANT ALL PRIVILEGES ON ${params.DB_NAME}.* TO '${params.DB_APP_USER}'@'localhost';
-    //         FLUSH PRIVILEGES;"`);
-    // await exec(`mysql -u root -e "CREATE USER '${params.DB_ADMIN}'@'%' IDENTIFIED BY '${params.DB_ADMIN_PW}';
-    //         GRANT ALL PRIVILEGES ON ${params.DB_NAME}.* TO '${params.DB_ADMIN}'@'%';
-    //         FLUSH PRIVILEGES;"`);
-    // await exec(`mysql -u root -e "CREATE TABLE ${params.DB_NAME}.users (id int(11) NOT NULL AUTO_INCREMENT,username varchar(100) NOT NULL,password varchar(100) NOT NULL,PRIMARY KEY (id)) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4;"`);
+    await exec(`mysql -u root -e "CREATE DATABASE ${params.DB_NAME}";`);
+    await exec(`mysql -u root -e "CREATE USER '${params.DB_APP_USER}'@'localhost' IDENTIFIED BY '${params.DB_APP_USER_PW}';
+            GRANT ALL PRIVILEGES ON ${params.DB_NAME}.* TO '${params.DB_APP_USER}'@'localhost';
+            FLUSH PRIVILEGES;"`);
+    await exec(`mysql -u root -e "CREATE USER '${params.DB_ADMIN}'@'%' IDENTIFIED BY '${params.DB_ADMIN_PW}';
+            GRANT ALL PRIVILEGES ON ${params.DB_NAME}.* TO '${params.DB_ADMIN}'@'%';
+            FLUSH PRIVILEGES;"`);
+    await exec(`mysql -u root -e "CREATE TABLE ${params.DB_NAME}.users (id int(11) NOT NULL AUTO_INCREMENT,username varchar(100) NOT NULL,password varchar(100) NOT NULL,PRIMARY KEY (id)) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4;"`);
     await exec(`mysql -u root -e "INSERT INTO ${params.DB_NAME}.users (id, username, password) VALUES(null, 'test', '${escapeShell('$2b$10$7l9mAr5UytdZrKFw8iBF7.Uf4pCH0wA2TAlNDDjcnl0HzvxEt2hje')}');"`);
 
     shell.echo(`Ui test user created :test@test`);
