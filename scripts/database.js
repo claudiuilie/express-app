@@ -21,9 +21,8 @@ async function runScript(script) {
     if (process.code !== 0) {
         shell.exit(1);
     }
-    shell.echo(`
-        code: ${process.code}
-        message: ${process.stdout}`);
+    shell.echo(`code: ${process.code}`);
+    shell.echo(`message: ${process.stdout}`);
 }
 
 async function check() {
