@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "set NODE_ENV=development&&node ./bin/www",
-    "prod": "node ./bin/www --NODE_EVN=production",
-    "database": "DB_APP_USER=$npm_config_appuser node ./scripts/database.js"
+    "prod": "NODE_EVN=production node ./bin/www",
+    "database": "DB_APP_USER=$npm_config_db_appuser node ./scripts/database.js"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
