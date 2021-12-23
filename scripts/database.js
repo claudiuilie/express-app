@@ -22,7 +22,7 @@ async function runScript(script) {
         shell.exit(1);
     }
     shell.echo(`code: ${process.code}`);
-    shell.echo(`message: ${process.stdout}`);
+    shell.echo(`message: ${typeof process.stdout}`);
 }
 
 async function check() {
