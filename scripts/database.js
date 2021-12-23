@@ -4,11 +4,10 @@ const shell = require('shelljs')
 
 // const code = shell.exec('mysql -u root -e "create database testdb";').code;
 // console.log(code);
-const child = shell.exec('mysql -u root -e "create database testdb";', {async:true});
-child.stdout.on('data', function(data) {
-    /* ... do something with data ... */
-    console.log(data);
-});
+const version = shell.exec('node --version', {silent:true}).stdout;
+console.log(version);
+
+
 // shell.exec('exit');
 // console.log(process.env.DB_APP_USER);
 //
