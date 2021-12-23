@@ -1,9 +1,15 @@
 const shell = require('shelljs');
 const fs = require('fs');
+const encryptionUtils = require('../utils/encryptionUtils');
+
+const uiParams = {
+    testUser: 'test',
+    password: 'test'
+};
 
 const params = getDbName({
     DB_NAME: process.env.DB_NAME,
-    DB_USER: 'app_user',
+    DB_APP_USER: 'app_user',
     DB_APP_USER_PW: process.env.DB_APP_USER_PW,
     DB_ADMIN: 'app_admin',
     DB_ADMIN_PW: process.env.DB_ADMIN_PW,
@@ -49,10 +55,10 @@ function createDbUser(username, database) {
 }
 
 function updateEnvConfig(content) {
-    shell.echo(`Updating .env:\n${content}`);
+    shell.echo(`\nUpdating .env:\n${content}`);
     try {
         fs.writeFileSync('.env', content);
-        shell.echo('.env successfully updated.');
+        shell.echo('\n.env successfully updated.');
     } catch (err) {
         shell.echo(err)
     }
@@ -61,8 +67,24 @@ function updateEnvConfig(content) {
 (async function runScript() {
     shell.echo('Start database script...');
     shell.echo(`Parameters: ${JSON.stringify(params)}`);
+
     await exec(`mysql -u root -e "create database ${params.DB_NAME}";`);
-    shell.echo('Database script ended successfully.');
+    await exec(`CREATE USER '${params.DB_APP_USER}'@'localhost' IDENTIFIED BY '${params.DB_APP_USER_PW}';
+            GRANT ALL PRIVILEGES ON ${params.DB_NAME}.* TO '${params.DB_APP_USER}'@'localhost';
+            FLUSH PRIVILEGES;`);
+    await exec(`CREATE USER '${params.DB_ADMIN}'@'%' IDENTIFIED BY '${params.DB_ADMIN_PW}';
+            GRANT ALL PRIVILEGES ON ${params.DB_NAME}.* TO '${params.DB_ADMIN}'@'%';
+            FLUSH PRIVILEGES;`);
+    await exec('CREATE TABLE `users` (\n' +
+        '  `id` int(11) NOT NULL AUTO_INCREMENT,\n' +
+        '  `username` varchar(100) NOT NULL,\n' +
+        '  `password` varchar(100) NOT NULL,\n' +
+        '  PRIMARY KEY (`id`)\n' +
+        ') ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4;');
+    await exec(`INSERT INTO bsc_platform.users (id, username, password) VALUES(null, '${uiParams.testUser}', '${await encryptionUtils.encrypt(uiParams.password)}');`);
+
+    shell.echo(`Ui test user created, password:${uiParams.testUser}@${uiParams.password}`);
+    shell.echo('\nDatabase script ended successfully.');
     shell.echo('Database connection settings:'+JSON.stringify(params))
     updateEnvConfig(envContent);
 })();
