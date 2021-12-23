@@ -2,8 +2,13 @@ const pool = require("../config/mySql");
 const helper = require("../helpers/dbHelper");
 const shell = require('shelljs')
 
-const code = shell.exec('mysql -u root -e "create database testdb";').code;
-console.log(code);
+// const code = shell.exec('mysql -u root -e "create database testdb";').code;
+// console.log(code);
+const child = exec('some_long_running_process', {async:true});
+child.stdout.on('data', function(data) {
+    /* ... do something with data ... */
+    console.log(data);
+});
 // shell.exec('exit');
 // console.log(process.env.DB_APP_USER);
 //
