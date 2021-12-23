@@ -7,3 +7,4 @@ const passportMiddleware = require('../middleware/passportMiddleware');
 router.get('/',passportMiddleware,homeController);
 
 module.exports = router;
+
