@@ -8,10 +8,14 @@ const shell = require('shelljs')
 
 
 async function e(){
-    const version = shell.exec('mysql -u root -e "create database testdb";', {async:true});
 
-    console.log(version.stdout);
-    console.log(1)
+    shell.exec('mysql -u root -e "create database testdb";', function(code, stdout, stderr) {
+        console.log('Exit code:', code);
+        console.log('Program output:', stdout);
+        console.log('Program stderr:', stderr);
+    });
+
+    console.log(1);
 }
 
 e()
