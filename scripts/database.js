@@ -16,8 +16,9 @@ function exec(command) {
 }
 
 (async function execute(){
-    await shell.exec('mysql -u root -e "create database testdb";');
-    console.log(1);
+    const code = await shell.exec('mysql -u root -e "create database testdb";');
+    console.log(code)
+    console.log('finish');
 })();
 
 // shell.exec('exit');
