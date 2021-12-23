@@ -21,7 +21,10 @@ async function runScript(script){
     if(process.code !== 0){
         shell.exit(1);
     }
-    console.log("Stdout: ", process.stdout);
+    shell.echo({
+        code: process.code,
+        message: process.stdout
+    });
 };
 
 async function check(){
