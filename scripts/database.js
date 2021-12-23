@@ -70,7 +70,7 @@ function updateEnvConfig(content) {
             GRANT ALL PRIVILEGES ON ${params.DB_NAME}.* TO '${params.DB_ADMIN}'@'%';
             FLUSH PRIVILEGES;"`);
     await exec(`mysql -u root -e "CREATE TABLE ${params.DB_NAME}.users (id int(11) NOT NULL AUTO_INCREMENT,username varchar(100) NOT NULL,password varchar(100) NOT NULL,PRIMARY KEY (id)) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4;"`);
-    await exec(`mysql -u root -e "INSERT INTO ${params.DB_NAME}.users (id, username, password) VALUES(null, 'test', '$2b$10$7l9mAr5UytdZrKFw8iBF7.Uf4pCH0wA2TAlNDDjcnl0HzvxEt2hje');"`);
+    await exec(`mysql -u root -e "INSERT INTO ${params.DB_NAME}.users (id, username, password) VALUES(null, 'test', '\$2b\$10\$7l9mAr5UytdZrKFw8iBF7.Uf4pCH0wA2TAlNDDjcnl0HzvxEt2hje');"`);
 
     shell.echo(`Ui test user created :test@test`);
     shell.echo('\nDatabase script ended successfully.');
