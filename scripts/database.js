@@ -2,7 +2,9 @@ const pool = require("../config/mySql");
 const helper = require("../helpers/dbHelper");
 const shell = require('shelljs')
 
-shell.echo('Test')
+const code = shell.exec('sudo mysql').code;
+console.log(code);
+shell.exec('exit');
 // console.log(process.env.DB_APP_USER);
 //
 // async function createUsers() {
