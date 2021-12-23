@@ -63,5 +63,6 @@ function updateEnvConfig(content) {
     shell.echo(`Parameters: ${JSON.stringify(params)}`);
     await exec(`mysql -u root -e "create database ${params.DB_NAME}";`);
     shell.echo('Database script ended successfully.');
+    shell.echo('Database connection settings:'+JSON.stringify(params))
     updateEnvConfig(envContent);
 })();
