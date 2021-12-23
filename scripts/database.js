@@ -6,11 +6,12 @@ const shell = require('shelljs')
 // console.log(code);
 
 function exec(command) {
+
     return new Promise((resolve, reject) => shelljs.exec(command, {}, (code, value, error) => {
         if (error) {
             return reject(error)
         }
-        resolve(value)
+        resolve(code)
     }))
 }
 
