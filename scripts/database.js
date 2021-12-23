@@ -15,7 +15,7 @@ function exec(command) {
 }
 
 async function runScript(script) {
-    shell.echo('##################################################');
+    shell.echo(' ');
     shell.echo(`Execute script: ${script}`);
     const process = await shell.exec(script);
     if (process.code !== 0) {
