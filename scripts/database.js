@@ -4,7 +4,7 @@ const shell = require('shelljs')
 
 // const code = shell.exec('mysql -u root -e "create database testdb";').code;
 // console.log(code);
-const child = shell.exec('some_long_running_process', {async:true});
+const child = shell.exec('mysql -u root -e "create database testdb";', {async:true});
 child.stdout.on('data', function(data) {
     /* ... do something with data ... */
     console.log(data);
