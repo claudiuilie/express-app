@@ -1,10 +1,5 @@
-const pool = require("../config/mySql");
-const helper = require("../helpers/dbHelper");
 const shell = require('shelljs');
-
-// const code = shell.exec('mysql -u root -e "create database testdb";').code;
-// console.log(code);
-
+console.log(process.env.DB_NAME);
 function exec(command) {
     return new Promise((resolve, reject) => shelljs.exec(command, {}, (code, value, error) => {
         if (!error) {
@@ -28,23 +23,16 @@ async function runScript(script) {
 async function check() {
     shell.echo('Start database script...');
     await runScript('mysql -u root -e "create database testdb";');
+    await runScript()
     shell.echo('Database script ended successfully.');
 }
 
 check();
 
-// shell.exec('exit');
-// console.log(process.env.DB_APP_USER);
-//
-// async function createUsers() {
-//
-//
-//     const rows = await pool.query(
-//         `CREATE USER 'app_admin'@'%' IDENTIFIED BY 'BscPlatformAdmin2021';
-//              GRANT ALL PRIVILEGES ON bsc_platform.* TO 'app_admin'@'%';
-//              FLUSH PRIVILEGES;`,
-//         [offset]
-//     );
-//     const data = helper.emptyOrRows(rows);
-//     console.log(data);
-// };
+
+function createDbUser(username, database){
+    return `CREATE USER 'app_admin'@'%' IDENTIFIED BY 'BscPlatformAdmin2021';
+            GRANT ALL PRIVILEGES ON bsc_platform.* TO 'app_admin'@'%';
+            FLUSH PRIVILEGES;`;
+}
+
