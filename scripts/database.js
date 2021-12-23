@@ -1,5 +1,22 @@
 const shell = require('shelljs');
-console.log(process.env.DB_NAME);
+const params = getDbName({
+    dbName: process.env.DB_NAME,
+    dbAppUser: process.env.DB_APP_USER
+});
+
+function getDbName(param) {
+    if (param.dbName === undefined) {
+        throw new Error(`DB_NAME is undefined!`);
+    }
+
+    if (param.dbAppUser === undefined) {
+        throw new Error(`DB__APP_USER is undefined!`);
+    }
+
+    return param;
+}
+
+
 function exec(command) {
     return new Promise((resolve, reject) => shelljs.exec(command, {}, (code, value, error) => {
         if (!error) {
@@ -22,15 +39,15 @@ async function runScript(script) {
 
 async function check() {
     shell.echo('Start database script...');
-    await runScript('mysql -u root -e "create database testdb";');
-    await runScript()
+    await runScript(`mysql -u root -e "create database ${dbName}";`);
+    await runScript();
     shell.echo('Database script ended successfully.');
 }
 
 check();
 
 
-function createDbUser(username, database){
+function createDbUser(username, database) {
     return `CREATE USER 'app_admin'@'%' IDENTIFIED BY 'BscPlatformAdmin2021';
             GRANT ALL PRIVILEGES ON bsc_platform.* TO 'app_admin'@'%';
             FLUSH PRIVILEGES;`;
