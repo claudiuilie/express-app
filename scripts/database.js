@@ -1,21 +1,22 @@
 const shell = require('shelljs');
-const params = getDbName({
-    dbName: process.env.DB_NAME,
-    dbAppUser: process.env.DB_APP_USER
-});
+// const params = getDbName({
+//     dbName: process.env.DB_NAME,
+//     dbAppUser: process.env.DB_APP_USER
+// });
+//
+// function getDbName(param) {
+//     if (param.dbName === undefined) {
+//         throw new Error(`DB_NAME is undefined!`);
+//     }
+//
+//     if (param.dbAppUser === undefined) {
+//         throw new Error(`DB__APP_USER is undefined!`);
+//     }
+//
+//     return param;
+// }
 
-function getDbName(param) {
-    if (param.dbName === undefined) {
-        throw new Error(`DB_NAME is undefined!`);
-    }
-
-    if (param.dbAppUser === undefined) {
-        throw new Error(`DB__APP_USER is undefined!`);
-    }
-
-    return param;
-}
-
+console.log(process.env.DB_NAME)
 
 function exec(command) {
     return new Promise((resolve, reject) => shelljs.exec(command, {}, (code, value, error) => {
