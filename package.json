@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "set NODE_ENV=development&&node ./bin/www",
     "prod": "NODE_EVN=production node ./bin/www",
-    "database": "DB_APP_USER=$npm_config_db_appuser DB_NAME=$npm_config_db_name node ./scripts/database.js"
+    "database": "DB_APP_USER=$npm_config_DB_APP_USER DB_NAME=$npm_config_DB_NAME node ./scripts/database.js"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",

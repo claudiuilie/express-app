@@ -12,7 +12,7 @@ function getDbName(param) {
     }
 
     if (param.dbAppUser === undefined || param.dbAppUser === '') {
-        throw new Error(`DB__APP_USER is undefined!`);
+        throw new Error(`DB_APP_USER is undefined!`);
     }
 
     return param;
