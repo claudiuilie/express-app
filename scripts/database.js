@@ -1,3 +1,5 @@
+// sudo npm run database --DB_NAME=bsc_platform --DB_APP_USER_PW=BscPlatformUser2021 --DB_ADMIN_PW=BscPlatformAdmin2021
+
 const shell = require('shelljs');
 const fs = require('fs');
 
