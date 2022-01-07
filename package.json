@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "set NODE_ENV=development&&node ./bin/www",
-    "prod": "NODE_EVN=production node ./bin/www",
+    "prod": "NODE_EVN=production pm2 ./bin/www",
     "database": "DB_NAME=$npm_config_DB_NAME DB_APP_USER_PW=$npm_config_DB_APP_USER_PW DB_ADMIN_PW=$npm_config_DB_ADMIN_PW node ./scripts/database.js",
     "encrypt_password": "PASSWORD=$npm_config_PASSWORD node ./scripts/encryptPassword.js"
   },

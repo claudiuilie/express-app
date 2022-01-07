@@ -1,3 +1,5 @@
+// sudo npm run encrypt_password --PASSWORD=test
+
 const encryptionUtils = require('../utils/encryptionUtils');
 const password = process.env.PASSWORD;
 
